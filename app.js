@@ -10,7 +10,8 @@ var http = require('http');
 var path = require('path');
 
 var app = express();
-mongoose.connect('mongodb://172.16.21.70:27017/data');
+//mongoose.connect('mongodb://172.16.21.70:27017/data');
+mongoose.connect('mongodb://data:Josmell.2015@ds157459.mlab.com:57459/heroku_5tp70h1l');
 mongoose.connection.on('connected', function () {  
   console.log('Mongoose default connection open ');
 }); 
