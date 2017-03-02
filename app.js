@@ -15,7 +15,6 @@ mongoose.connect('mongodb://data:Josmell.2015@ds157459.mlab.com:57459/heroku_5tp
 mongoose.connection.on('connected', function () {  
   console.log('Mongoose default connection open ');
 }); 
-
 // If the connection throws an error
 mongoose.connection.on('error',function (err) {  
   console.log('Mongoose default connection error' );
@@ -33,7 +32,7 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(express.methodOverride());
+app.use(express.methodOverride()); 
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -42,8 +41,11 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', function(req, res){
-  //res.render('layout.jade');
+var server =http.createServer(app).listen(app.get('port'), function(){
+  console.log("Express server listening on port " + app.get('port'));
+}); 
+
+app.get('/', function(req, res){ 
   res.writeHead(400,{'content-type':'text/html'});
   res.write('<!doctype html><html><head><meta charset="utf-8"><title>CGH-BACKEND</title><style>'+
   	        'body{background:#2f2f2f;background:-moz-radial-gradient(center,ellipse cover,#2f2f2f 0%,#1b1b1b 100%);'+
@@ -56,37 +58,45 @@ app.get('/', function(req, res){
   res.end();
 });
 
-
-var server =http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
-}); 
-
-var Usuario = mongoose.model('Usuario', 
-                { 
- 		 		 usuario: String,
-                 contrasenia:String, 
-                 email:String 
-                });
-
-app.get('/usuario/getUsuario', function(req, res){
+var Usuario = require('./models/usuarios');
+app.get('/usuario', function(req, res){
    
    Usuario.find({}, function (err, docs) {
         res.json(docs);
     });
 });
 
-app.post('/usuario/addUsuario', function(req, res){
-  var userName = req.body.nombre;
-  var userPass = req.body.contrasenia;
-  var userEmail = req.body.email;
-  var usuarioNew = new Usuario({  usuario: userName,  contrasenia: userPass,  email: userEmail  });
-  usuarioNew.save(function(err) {
-
-	  if (err) throw err;
-		  console.log('User saved successfully!');
+app.post('/usuario', function(req, res){
+  var idSocial   = req.body.id_social;
+  var tipoSocial = req.body.tipo_social;
+  var usuario    = req.body.usuario;
+  var contrasenia= req.body.contrasenia;
+  var email      = req.body.email;
+  var genero     = req.body.genero;
+  var nombre     = req.body.nombre; 
+  var apellido   = req.body.apellido; 
+  var fechaNacimiento  = req.body.fecha_nacimiento; 
+  var foto       = req.body.foto; 
+  var codigoTrabajador = req.body.codigo_trabajador; 
+  var fechaRegistro    = req.body.fecha_registro; 
+  var estado     = req.body.estado;  
+  var usuarioNew = new Usuario({  
+  	id_social:idSocial,
+	tipo_social:tipoSocial,
+	usuario: usuario,
+	contrasenia:contrasenia, 
+	email:email, 
+	genero:genero,
+	nombre:nombre,
+	apellido:apellido,
+	fecha_nacimiento:fechaNacimiento,
+	foto:foto,
+	codigo_trabajador:codigoTrabajador, 
+	estado:estado  
   });
-  res.write('<!doctype html><html><head><meta charset="utf-8"><title>CGH-BACKEND</title></head><body>'+
-  	        'new usuarios :'+userName+
-  	        '</body></html>');
+  usuarioNew.save(function(err) {
+	  if (err) throw err;
+      console.log('User saved successfully!');
+  });
   res.end();
 });
