@@ -96,7 +96,7 @@ app.post('/usuario', function(req, res){
   });
   usuarioNew.save(function(err) {
 	  if (err) throw err;
-  	  res.json('[{ "result": "success" } "]');
+  	  res.json(usuarioNew);
   }); 
  
 });
