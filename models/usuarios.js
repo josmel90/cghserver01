@@ -16,3 +16,5 @@ var Usuario = mongoose.model('Usuario',
                  estado:String 
                 }); 
 module.exports = Usuario;
+
+

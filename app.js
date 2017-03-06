@@ -59,6 +59,7 @@ app.get('/', function(req, res){
 });
 
 var Usuario = require('./models/usuarios');
+var Success = require('./models/success');
 app.get('/usuario', function(req, res){
    
    Usuario.find({}, function (err, docs) {
@@ -96,7 +97,8 @@ app.post('/usuario', function(req, res){
   });
   usuarioNew.save(function(err) {
 	  if (err) throw err;
-  	  res.json(usuarioNew);
+	  Success = new Success({  result:'true' });
+  	  res.json(Success);
   }); 
  
 });
