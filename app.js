@@ -98,6 +98,8 @@ app.post('/usuario', function(req, res){
 	  if (err) throw err;
   	  
   });
-  res.write('ups');
+  res.write(" { "+
+		    " 'result': 'success' "+
+		    " } ");
   res.end();
 });
