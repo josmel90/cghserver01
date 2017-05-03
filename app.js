@@ -72,6 +72,8 @@ app.post('/usuario', function(req, res){
   var tipoSocial = req.body.tipo_social;
   var usuario    = req.body.usuario;
   var contrasenia= req.body.contrasenia;
+  var dni        = req.body.dni;
+  var celular    = req.body.celular;
   var email      = req.body.email;
   var genero     = req.body.genero;
   var nombre     = req.body.nombre; 
@@ -86,6 +88,8 @@ app.post('/usuario', function(req, res){
 	tipo_social:tipoSocial,
 	usuario: usuario,
 	contrasenia:contrasenia, 
+  dni:dni, 
+  celular:celular, 
 	email:email, 
 	genero:genero,
 	nombre:nombre,
