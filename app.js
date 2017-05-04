@@ -57,8 +57,9 @@ app.get('/', function(req, res){
   	        '<div style="height:200px;"></div></div></center></body></html>');
   res.end();
 });
-//usuarios
+
 var Usuario = require('./models/usuarios');
+var Post = require('./models/post');
 var Success = require('./models/success');
 app.get('/usuario', function(req, res){
    
@@ -66,7 +67,12 @@ app.get('/usuario', function(req, res){
         res.json(docs);
     });
 });
-
+app.get('/publicaciones', function(req, res){
+   
+   Post.find({}, function (err, docs) {
+        res.json(docs);
+    });
+});
 app.post('/usuario', function(req, res){
   var idSocial   = req.body.id_social;
   var tipoSocial = req.body.tipo_social;
@@ -84,32 +90,25 @@ app.post('/usuario', function(req, res){
   var fechaRegistro    = req.body.fecha_registro; 
   var estado     = req.body.estado;  
   var usuarioNew = new Usuario({  
-  	id_social:idSocial,
-	tipo_social:tipoSocial,
-	usuario: usuario,
-	contrasenia:contrasenia, 
-  dni:dni, 
-  celular:celular, 
-	email:email, 
-	genero:genero,
-	nombre:nombre,
-	apellido:apellido,
-	fecha_nacimiento:fechaNacimiento,
-	foto:foto,
-	codigo_trabajador:codigoTrabajador, 
-	estado:estado  
-  });
+                        id_social:idSocial,
+                      	tipo_social:tipoSocial,
+                      	usuario: usuario,
+                      	contrasenia:contrasenia, 
+                        dni:dni, 
+                        celular:celular, 
+                      	email:email, 
+                      	genero:genero,
+                      	nombre:nombre,
+                      	apellido:apellido,
+                      	fecha_nacimiento:fechaNacimiento,
+                      	foto:foto,
+                      	codigo_trabajador:codigoTrabajador, 
+                      	estado:estado  
+                      });
   usuarioNew.save(function(err) {
-	  if (err) throw err;
-	  Success = new Success({  result:'true' });
-  	  res.json(Success);
+  	  if (err) throw err;
+  	  Success = new Success({  result:'true' });
+    	  res.json(Success);
   }); 
-//post 
-  var Post = require('./models/post');
-  app.get('/post', function(req, res){
-     
-     Post.find({}, function (err, docs) {
-          res.json(docs);
-      });
-  });
+
 });
