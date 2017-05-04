@@ -67,34 +67,34 @@ app.get('/usuario', function(req, res){
         res.json(docs);
     });
 });
-app.get('/publicaciones', function(req, res){
+app.get('/publicacion', function(req, res){
    
    Post.find({}, function (err, docs) {
         res.json(docs);
     });
 });
-app.post('/publicaciones', function(req, res){
-  var _id_usuario    = req.body.id_social;
-  var tv_titulo_post = req.body.id_social;
-  var tv_fecha_post  = req.body.id_social;
-  var tv_detalle_post= req.body.id_social;
-  var cant_goods     = req.body.id_social;
-  var cant_post_comentarios = req.body.id_social;
-  var btn_goods      = req.body.id_social;
-  var btn_comentarios= req.body.id_social;
-  var fecha_registro = req.body.id_social;
-  var estado         = req.body.id_social;
+app.post('/publicacion', function(req, res){
+  var _id_usuario    = req.body.id_usuario;
+  var tv_titulo_post = req.body.tv_titulo_post;
+  var tv_fecha_post  = req.body.tv_fecha_post;
+  var tv_detalle_post= req.body.tv_detalle_post;
+  var cant_goods     = req.body.cant_goods;
+  var cant_post_comentarios = req.body.cant_post_comentarios;
+  var btn_goods      = req.body.btn_goods;
+  var btn_comentarios= req.body.btn_comentarios;
+  var fecha_registro = req.body.fecha_registro;
+  var estado         = req.body.estado;
   var postNew = new Post({ 
        _id_usuario    : _id_usuario,
-       tv_titulo_post : tv_titulo_post;
-       tv_fecha_post  : tv_fecha_post;
-       tv_detalle_post: tv_detalle_post;
-       cant_goods     : cant_goods;
-       cant_post_comentarios : cant_post_comentarios;
-       btn_goods      : btn_goods;
-       btn_comentarios: btn_comentarios;
-       fecha_registro : fecha_registro;
-       estado         : estado;
+       tv_titulo_post : tv_titulo_post,
+       tv_fecha_post  : tv_fecha_post,
+       tv_detalle_post: tv_detalle_post,
+       cant_goods     : cant_goods,
+       cant_post_comentarios : cant_post_comentarios,
+       btn_goods      : btn_goods,
+       btn_comentarios: btn_comentarios,
+       fecha_registro : fecha_registro,
+       estado         : estado
   });
   postNew.save(function(err) {
       if (err) throw err;
