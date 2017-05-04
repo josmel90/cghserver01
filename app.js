@@ -57,7 +57,7 @@ app.get('/', function(req, res){
   	        '<div style="height:200px;"></div></div></center></body></html>');
   res.end();
 });
-
+//usuarios
 var Usuario = require('./models/usuarios');
 var Success = require('./models/success');
 app.get('/usuario', function(req, res){
@@ -104,5 +104,12 @@ app.post('/usuario', function(req, res){
 	  Success = new Success({  result:'true' });
   	  res.json(Success);
   }); 
- 
+//post 
+  var Post = require('./models/post');
+  app.get('/post', function(req, res){
+     
+     Post.find({}, function (err, docs) {
+          res.json(docs);
+      });
+  });
 });
