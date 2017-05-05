@@ -71,7 +71,7 @@ app.get('/publicacion' ,  function(req, res){
    
    Post.find({}, function (err, docs) {
         res.json(docs);
-    });
+    }).sort('-_id');
 });
 app.post('/publicacion', function(req, res){
   var _id_usuario    = req.body.id_usuario;
