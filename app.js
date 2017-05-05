@@ -67,7 +67,7 @@ app.get('/usuario', function(req, res){
         res.json(docs);
     });
 });
-app.get('/publicacion', function(req, res){
+app.get('/publicacion',null, {sort: '-fecha_registro'}, function(req, res){
    
    Post.find({}, function (err, docs) {
         res.json(docs);
@@ -99,7 +99,7 @@ app.post('/publicacion', function(req, res){
   postNew.save(function(err) {
       if (err) throw err;
       Success = new Success({  result:'true' });
-        res.json(Success);
+      res.json(Success);
   }); 
 });
 app.post('/usuario', function(req, res){
