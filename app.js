@@ -67,7 +67,7 @@ app.get('/usuario', function(req, res){
         res.json(docs);
     });
 });
-app.get('/publicacion',null, {sort: '-fecha_registro'}, function(req, res){
+app.get('/publicacion','first last',  function(req, res){
    
    Post.find({}, function (err, docs) {
         res.json(docs);
