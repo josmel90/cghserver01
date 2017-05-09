@@ -67,6 +67,14 @@ app.get('/usuario', function(req, res){
         res.json(docs);
     });
 });
+//valida usuario
+app.post('/asd13a5s4d6asd', function(req, res){
+  var usuario_rec    = req.body.usuario;
+  var contrasenia_rec= req.body.contrasenia;
+   Usuario.find({usuario:usuario_rec, contrasenia:contrasenia_rec}, function (err, docs) {
+        res.json(docs);
+    });
+});
 app.get('/publicacion' ,  function(req, res){
    
    Post.find({}, function (err, docs) {
