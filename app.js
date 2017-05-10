@@ -104,6 +104,7 @@ app.post('/publicacion', function(req, res){
        fecha_registro : fecha_registro,
        img_url        : img_url,
        img_url_usuario:img_url_usuario,
+       tv_nombre_usuario:tv_nombre_usuario,
        estado         : estado
   });
   postNew.save(function(err) {

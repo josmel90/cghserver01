@@ -10,6 +10,7 @@ var Post = mongoose.model('Post',
                  fecha_registro:{ type: Date, default: Date.now },
                  img_url:String,
                  img_url_usuario:String,
+                 tv_nombre_usuario:String,
                  estado:String 
                 }); 
 module.exports = Post;
