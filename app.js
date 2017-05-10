@@ -87,11 +87,11 @@ app.post('/publicacion', function(req, res){
   var tv_fecha_post  = req.body.tv_fecha_post;
   var tv_detalle_post= req.body.tv_detalle_post;
   var cant_goods     = req.body.cant_goods;
-  var cant_post_comentarios = req.body.cant_post_comentarios;
-  var btn_goods      = req.body.btn_goods;
-  var btn_comentarios= req.body.btn_comentarios;
+  var cant_post_comentarios = req.body.cant_post_comentarios; 
   var fecha_registro = req.body.fecha_registro;
   var estado         = req.body.estado;
+  var img_url        = req.body.img_url;
+  var img_url_usuario= req.body.img_url_usuario;
   var postNew = new Post({ 
        _id_usuario    : _id_usuario,
        tv_titulo_post : tv_titulo_post,
@@ -102,6 +102,8 @@ app.post('/publicacion', function(req, res){
        btn_goods      : btn_goods,
        btn_comentarios: btn_comentarios,
        fecha_registro : fecha_registro,
+       img_url        : img_url,
+       img_url_usuario:img_url_usuario,
        estado         : estado
   });
   postNew.save(function(err) {
