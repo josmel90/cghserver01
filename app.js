@@ -69,7 +69,8 @@ app.get('/usuario', function(req, res){
 });
 app.post('/validaEmail', function(req, res){
   var usuario_rec    = req.body.usuario; 
-   Usuario.find({usuario:usuario_rec}, function (err, docs) {
+  var tipo_social_rec = req.body.tipo_social;
+   Usuario.find({usuario:usuario_rec,tipo_social:tipo_social_rec}, function (err, docs) {
         res.json(docs);
     });
 });
