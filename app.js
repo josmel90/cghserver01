@@ -9,6 +9,8 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 
+
+
 var app = express();
 //mongoose.connect('mongodb://172.16.21.70:27017/data');
 mongoose.connect('mongodb://data:Josmell.2015@ds157459.mlab.com:57459/heroku_5tp70h1l');
@@ -46,7 +48,7 @@ var server =http.createServer(app).listen(app.get('port'), function(){
 }); 
 
 app.get('/', function(req, res){ 
-  res.writeHead(400,{'content-type':'text/html'});
+  res.writeHead(200,{'content-type':'text/html'});
   res.write('<!doctype html><html><head><meta charset="utf-8"><title>CGH-BACKEND</title><style>'+
   	        'body{background:#2f2f2f;background:-moz-radial-gradient(center,ellipse cover,#2f2f2f 0%,#1b1b1b 100%);'+
   	        'background:-webkit-gradient(radial,center center,0px,center center,100%,color-stop(0%,#2f2f2f),color-stop(100%,#1b1b1b));'+
@@ -157,5 +159,14 @@ app.post('/usuario', function(req, res){
   	  Success = new Success({  result:'true' });
     	  res.json(Success);
   }); 
-
 });
+
+  var io = require('socket.io').listen(server);
+
+  io.sockets.on('connection', function (socket) {
+    console.log('Entra');
+      socket.on('newPost', function(msg){
+        data = {x:msg};
+        socket.broadcast.emit('newPost',data);
+      });
+  });
