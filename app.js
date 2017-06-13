@@ -43,9 +43,6 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-var server =http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
-}); 
 
 app.get('/', function(req, res){ 
   res.writeHead(200,{'content-type':'text/html'});
@@ -59,15 +56,27 @@ app.get('/', function(req, res){
   	        '<div style="height:200px;"></div></div></center></body></html>');
   res.end();
 });
+var server =http.createServer(app).listen(app.get('port'), function(){
+  console.log("Express server listening on port " + app.get('port'));
+}); 
 
 var Usuario = require('./models/usuarios');
 var Post = require('./models/post');
 var Success = require('./models/success');
+var Platos = require('./models/platos');
 app.get('/usuario', function(req, res){
    
    Usuario.find({}, function (err, docs) {
         res.json(docs);
     });
+});
+// post platos
+app.get('/platos', function(req, res){
+   
+   Platos.find({}, function (err, docs) {
+        res.json(docs);
+    }).sort('-_id');
+
 });
 app.post('/validaEmail', function(req, res){
   var usuario_rec    = req.body.usuario; 
@@ -161,12 +170,11 @@ app.post('/usuario', function(req, res){
   }); 
 });
 
-  var io = require('socket.io').listen(server);
+var io = require('socket.io').listen(server);
 
-  io.sockets.on('connection', function (socket) {
-    console.log('Entra');
-      socket.on('newPost', function(msg){
-        data = {x:msg};
-        socket.broadcast.emit('newPost',data);
-      });
-  });
+io.sockets.on('connection', function (socket) { 
+    socket.on('newPost', function(data){
+      data = {x:data};
+      socket.broadcast.emit('newPost',data);
+    });
+});
