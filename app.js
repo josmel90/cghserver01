@@ -59,10 +59,8 @@ var server =http.createServer(app).listen(app.get('port'), function(){
 }); 
 
 var Usuario = require('./models/usuarios');
-var Post = require('./models/post');
-var Success = require('./models/success');
-var Platos = require('./models/platos');
-Success = new Success({  result:'true' });
+var Post = require('./models/post'); 
+var Platos = require('./models/platos');  
 app.get('/usuario', function(req, res){
    
    Usuario.find({}, function (err, docs) {
@@ -90,7 +88,24 @@ app.post('/btn_goods_platos', function(req, res){
         
         Platos.update({ _id: id }, { gusta: new_good }, { multi: true }, function  (err, numAffected) {
             if (err) throw err; 
-            res.json(Success);
+            res.json({  result:'true' });
+        });
+    });
+});
+app.post('/btn_bad_platos', function(req, res){
+  var id    = req.body._id; 
+
+  var new_bad = '0';   
+   Platos.find({_id:id}, function (err, docs) { 
+        if (typeof docs[0].no_gusta == "undefined") {
+            new_bad = 1;
+        }else{
+            new_bad = parseInt(docs[0].no_gusta)+1;
+        }
+        
+        Platos.update({ _id: id }, { no_gusta: new_bad }, { multi: true }, function  (err, numAffected) {
+            if (err) throw err; 
+            res.json({  result:'true' });
         });
     });
 });
@@ -143,9 +158,8 @@ app.post('/publicacion', function(req, res){
        estado         : estado
   });
   postNew.save(function(err) {
-      if (err) throw err;
-      Success = new Success({  result:'true' });
-      res.json(Success);
+      if (err) throw err; 
+      res.json({  result:'true' });
   }); 
 });
 app.post('/usuario', function(req, res){
@@ -181,9 +195,8 @@ app.post('/usuario', function(req, res){
                       	estado:estado  
                       });
   usuarioNew.save(function(err) {
-  	  if (err) throw err;
-  	  Success = new Success({  result:'true' });
-    	  res.json(Success);
+  	  if (err) throw err; 
+    	  res.json({  result:'true' });
   }); 
 });
 
