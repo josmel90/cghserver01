@@ -9,8 +9,6 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 
-
-
 var app = express();
 //mongoose.connect('mongodb://172.16.21.70:27017/data');
 mongoose.connect('mongodb://data:Josmell.2015@ds157459.mlab.com:57459/heroku_5tp70h1l');
@@ -64,6 +62,7 @@ var Usuario = require('./models/usuarios');
 var Post = require('./models/post');
 var Success = require('./models/success');
 var Platos = require('./models/platos');
+Success = new Success({  result:'true' });
 app.get('/usuario', function(req, res){
    
    Usuario.find({}, function (err, docs) {
@@ -77,6 +76,22 @@ app.get('/platos', function(req, res){
         res.json(docs);
     }).sort('-_id');
 
+});
+app.get('/btn_goods_platos', function(req, res){
+  var id    = '5941cc61baa139430443b2f0'; 
+  var new_good = '0';  
+   Platos.find({_id:id}, function (err, docs) { 
+        if (typeof docs[0].gusta == "undefined") {
+            new_good = 1;
+        }else{
+            new_good = parseInt(docs[0].gusta)+1;
+        }
+        
+        Platos.update({ _id: id }, { gusta: new_good }, { multi: true }, function  (err, numAffected) {
+            if (err) throw err; 
+            res.json(Success);
+        });
+    });
 });
 app.post('/validaEmail', function(req, res){
   var usuario_rec    = req.body.usuario; 
@@ -92,7 +107,8 @@ app.post('/asd13a5s4d6asd', function(req, res){
    Usuario.find({usuario:usuario_rec, contrasenia:contrasenia_rec}, function (err, docs) {
         res.json(docs);
     });
-});
+}); 
+
 app.get('/publicacion' ,  function(req, res){
    
    Post.find({}, function (err, docs) {
