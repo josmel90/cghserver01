@@ -77,8 +77,8 @@ app.get('/platos', function(req, res){
     }).sort('-_id');
 
 });
-app.get('/btn_goods_platos', function(req, res){
-  var id    = '5941cc61baa139430443b2f0'; 
+app.post('/btn_goods_platos', function(req, res){
+  var id    = req.body.usuario;  
   var new_good = '0';  
    Platos.find({_id:id}, function (err, docs) { 
         if (typeof docs[0].gusta == "undefined") {
