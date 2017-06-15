@@ -78,7 +78,8 @@ app.get('/platos', function(req, res){
 
 });
 app.post('/btn_goods_platos', function(req, res){
-  var id    = req.body.id; 
+  var id    = req.body._id; 
+
   var new_good = '0';   
    Platos.find({_id:id}, function (err, docs) { 
         if (typeof docs[0].gusta == "undefined") {
