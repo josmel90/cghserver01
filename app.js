@@ -75,6 +75,13 @@ app.get('/platos', function(req, res){
     }).sort('-_id');
 
 });
+app.post('/platosById', function(req, res){
+   var id    = req.body._id; 
+   Platos.find({_id:id}, function (err, docs) {
+        res.json(docs);
+    });
+
+});
 app.post('/btn_goods_platos', function(req, res){
   var id    = req.body._id; 
 
